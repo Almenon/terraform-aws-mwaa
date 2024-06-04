@@ -95,7 +95,7 @@ data "aws_iam_policy_document" "mwaa" {
       "logs:DescribeLogGroups",
       "cloudwatch:PutMetricData",
       "s3:GetAccountPublicAccessBlock",
-      "eks:DescribeCluster
+      "eks:DescribeCluster"
     ]
     resources = [
       "*"
