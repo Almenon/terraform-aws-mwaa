@@ -86,7 +86,8 @@ resource "aws_iam_role" "mwaa" {
 resource "aws_iam_role_policy" "mwaa" {
   count = var.create_iam_role ? 1 : 0
 
-  name_prefix = "mwaa-executor"
+  name        = var.policy_name
+  name_prefix = var.policy_name == null ? "mwaa-executor" : null
   role        = aws_iam_role.mwaa[0].id
   policy      = data.aws_iam_policy_document.mwaa.json
 }
@@ -149,7 +150,7 @@ resource "aws_security_group" "mwaa" {
   count = var.create_security_group ? 1 : 0
 
   name        = var.security_group_name
-  name_prefix = "mwaa-"
+  name_prefix = var.security_group_name == null ? "mwaa-" : null
   description = "Security group for MWAA environment"
   vpc_id      = var.vpc_id
 
