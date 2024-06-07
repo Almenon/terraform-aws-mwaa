@@ -72,8 +72,8 @@ resource "aws_mwaa_environment" "mwaa" {
 resource "aws_iam_role" "mwaa" {
   count = var.create_iam_role ? 1 : 0
 
-  name                  = var.iam_role_name != null ? var.iam_role_name : null
-  name_prefix           = var.iam_role_name != null ? null : "mwaa-executor"
+  name                  = var.iam_role_name
+  name_prefix           = var.iam_role_name == null ? "mwaa-executor" : null
   description           = "MWAA IAM Role"
   assume_role_policy    = data.aws_iam_policy_document.mwaa_assume.json
   force_detach_policies = var.force_detach_policies
