@@ -227,6 +227,12 @@ variable "create_security_group" {
   default     = true
 }
 
+variable "security_group_name" {
+  description = "Name of security group"
+  type        = string
+  default     = null
+}
+
 variable "security_group_ids" {
   description = "Security group IDs for MWAA"
   type        = list(string)

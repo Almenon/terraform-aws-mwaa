@@ -148,6 +148,7 @@ resource "aws_s3_bucket_public_access_block" "mwaa" {
 resource "aws_security_group" "mwaa" {
   count = var.create_security_group ? 1 : 0
 
+  name        = var.security_group_name
   name_prefix = "mwaa-"
   description = "Security group for MWAA environment"
   vpc_id      = var.vpc_id
