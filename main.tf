@@ -72,8 +72,8 @@ resource "aws_mwaa_environment" "mwaa" {
 resource "aws_iam_role" "mwaa" {
   count = var.create_iam_role ? 1 : 0
 
-  name                  = var.iam_role_name != null ? var.iam_role_name : null
-  name_prefix           = var.iam_role_name != null ? null : "mwaa-executor"
+  name                  = var.iam_role_name
+  name_prefix           = var.iam_role_name == null ? "mwaa-executor" : null
   description           = "MWAA IAM Role"
   assume_role_policy    = data.aws_iam_policy_document.mwaa_assume.json
   force_detach_policies = var.force_detach_policies
@@ -86,7 +86,8 @@ resource "aws_iam_role" "mwaa" {
 resource "aws_iam_role_policy" "mwaa" {
   count = var.create_iam_role ? 1 : 0
 
-  name_prefix = "mwaa-executor"
+  name        = var.policy_name
+  name_prefix = var.policy_name == null ? "mwaa-executor" : null
   role        = aws_iam_role.mwaa[0].id
   policy      = data.aws_iam_policy_document.mwaa.json
 }
@@ -148,7 +149,8 @@ resource "aws_s3_bucket_public_access_block" "mwaa" {
 resource "aws_security_group" "mwaa" {
   count = var.create_security_group ? 1 : 0
 
-  name_prefix = "mwaa-"
+  name        = var.security_group_name
+  name_prefix = var.security_group_name == null ? "mwaa-" : null
   description = "Security group for MWAA environment"
   vpc_id      = var.vpc_id
 
